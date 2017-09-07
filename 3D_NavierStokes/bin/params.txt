@@ -1,0 +1,18 @@
+ISEED = 837920
+IREST = 0
+infile = none
+infile type = D
+KF = 4
+Re = 20.0
+TSTEP = 50.0
+ResidualThreshold = 1.0
+outfreq1 = 0.1
+outfreq2 = 10.0
+DELT = 0.01
+AMPV = 1.0
+STATSFLAG = 1
+RCFLAG = 0
+UPOflag = 0
+ISTOP = 1
+
+

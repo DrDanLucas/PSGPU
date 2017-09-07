@@ -1,0 +1,37 @@
+INC     := -I$(CPATH)  -I.
+LIB     := -L$(CPATH)/../lib64 
+SDKINC  := -I/opt/cuda-5.0/samples/common/inc
+
+NVCCFLAGS := -O3 -arch=sm_20 --use_fast_math -c
+LIBS    := -lcufft -lcudart -lm
+  
+all: cuda dns3 	
+
+cuda:      cuda.cu kernels.h functions.h
+	   nvcc cuda.cu $(SDKINC) $(INC) $(NVCCFLAGS) $(LIB) $(LIBS)
+
+dns3: 	global_params.F90 parameters.F90 main.F90 init.F90 cuda.o
+	gfortran -O3 -fno-math-errno -mcmodel=large  -o ../bin/dns3 global_params.F90 parameters.F90 main.F90 init.F90 cuda.o $(LIB) $(LIBS)
+
+rewrite: rewrite_vort rewrite_avgs
+
+rewrite_vort:  global_params.F90 rewrite_vort.f 
+	gfortran -O3 -fno-math-errno -mcmodel=large    -o ../bin/rewrite_vort global_params.F90 rewrite_vort.f 
+
+rewrite_plane:  global_params.F90 rewrite_plane.f 
+	gfortran -O3 -fno-math-errno -mcmodel=large    -o ../bin/rewrite_plane global_params.F90 rewrite_plane.f 
+
+rewrite_avgs:  global_params.F90 rewrite_avgs.f 
+	gfortran -O3 -fno-math-errno -mcmodel=large    -o ../bin/rewrite_avgs global_params.F90 rewrite_avgs.f 
+
+compare_vort:  global_params.F90 compare_vort.f 
+	gfortran -O3 -fno-math-errno -mcmodel=medium   	 -o ../bin/compare_vort global_params.F90 compare_vort.f 
+
+extract_ZK:  global_params.F90 extract_ZK.f 
+	gfortran -O3 -fno-math-errno -mcmodel=medium  -o ../bin/extract_ZK global_params.F90 extract_ZK.f 
+
+compare_ZK:  global_params.F90 compare_ZK.f 
+	gfortran -O3 -fno-math-errno -mcmodel=medium  -o ../bin/compare_ZK global_params.F90 compare_ZK.f 
+
+rewrite_vort_movie:  global_params.F90 rewrite_vort_movie.f 
+	gfortran -O3 -fno-math-errno -mcmodel=medium	 -o ../movie_31/rewrite_vort global_params.F90 rewrite_vort_movie.f 

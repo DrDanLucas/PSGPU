@@ -1,0 +1,13 @@
+IGUESSEND = 53
+maxPERIOD = 25.0
+gmres ResidualThreshold = 0.6
+arclcFLAG = F
+1stOrder = F
+2ndOrder PredOnly = F
+Full 2ndOrder = T
+drN_reset = F
+Fixed Period = F
+Fixed Period Size = 0.5
+delta_v2 = 0.01
+ArnoldiFLAG = F
+ParFLAG = 3
